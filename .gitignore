@@ -1,0 +1,4 @@
+node_modules/
+ants.config.json
+.DS_Store
+npm-debug.log*
