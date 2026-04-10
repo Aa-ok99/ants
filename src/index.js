@@ -1,15 +1,20 @@
-#!/usr/bin/env node
 const { Command } = require('commander');
+const packageJson = require('../package.json');
+const { initCommand } = require('./commands/init');
+
 const program = new Command();
 
 program
   .name('ants')
-  .description('🐜 Ants CLI v0.1.0')
-  .version('0.1.0');
+  .description(packageJson.description)
+  .version(packageJson.version);
 
-// 👇 ตรงนี้คุณจะวางโค้ดจาก index.js.bak ต่อได้เลย
+program.addCommand(initCommand);
+
 program.command('hello')
-  .description('ทดสอบระบบ')
-  .action(() => console.log('👋 Ants พร้อมใช้งาน!'));
+  .description('Say hello from Ants CLI')
+  .action(() => {
+    console.log('🐜 Hello! Ants CLI is ready to work.');
+  });
 
-program.parse(process.argv);
+module.exports = program;
