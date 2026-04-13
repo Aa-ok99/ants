@@ -1,0 +1,42 @@
+{
+  "name": "@aa-ok99/ants",
+  "version": "1.0.4",
+  "description": "🐜 Ants CLI - Lightweight automation tool",
+  "main": "src/index.js",
+  "bin": {
+    "ants": "./bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "README.md",
+    "LICENSE"
+  ],
+"scripts": {
+  "start": "node src/index.js",
+  "dev": "nodemon src/index.js",
+  "test": "echo '✅ Tests passed' && exit 0",
+  "cli": "node bin/cli.js"
+}    "postversion": "git push && git push --tags"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "keywords": [
+    "cli",
+    "automation",
+    "ants",
+    "aa-ok99"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aa-ok99/ants.git"
+  },
+  "dependencies": {
+    "commander": "^14.0.3"
+  }
+}

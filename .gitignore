@@ -1,6 +1,5 @@
 node_modules/
-ants.config.json
+.vercel/
+.env
 .DS_Store
-npm-debug.log*
-ants.config.json
-.vercel
+*.log

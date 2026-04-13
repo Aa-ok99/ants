@@ -2,7 +2,11 @@
 
 const args = process.argv.slice(2);
 const pkg = require('../package.json');
-
+// จัดการ status
+if (args[0] === 'status') {
+  require('../src/commands/status');
+  process.exit(0);
+}
 // จัดการ init command
 if (args[0] === 'init') {
   require('../src/commands/init');
