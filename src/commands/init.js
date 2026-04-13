@@ -1,20 +1,45 @@
-const { Command } = require('commander');
+#!/usr/bin/env node
+
+console.log('🚀 Initializing new Ants project...');
+
 const fs = require('fs');
 const path = require('path');
 
-const initCommand = new Command('init')
-  .description('Initialize a new ants project configuration')
-  .option('-n, --name <name>', 'Project name', 'my-ants-project')
-  .action((options) => {
-    console.log(`🐜 Initializing project: ${options.name}...`);
-    const configPath = path.join(process.cwd(), 'ants.config.json');
-    if (fs.existsSync(configPath)) {
-      console.warn('⚠️  ants.config.json already exists.');
-      return;
+try {
+  const projectDir = process.cwd();
+  
+  // ตรวจสอบว่า有没有 ants.config.json แล้ว
+  const configPath = path.join(projectDir, 'ants.config.json');
+  
+  if (fs.existsSync(configPath)) {
+    console.log('⚠️  ants.config.json already exists!');
+    console.log('💡 Run `rm ants.config.json` first if you want to reinitialize');
+    process.exit(0);
+  }
+  
+  // สร้าง config
+  const config = {
+    name: path.basename(projectDir),
+    version: '1.0.0',
+    created: new Date().toISOString(),
+    ants: {
+      api: 'https://ants-pied.vercel.app',
+      status: 'ready'
+    },
+    scripts: {
+      start: 'npx @aa-ok99/ants',
+      test: 'echo "No tests specified"'
     }
-    const config = { name: options.name, version: "0.1.0", tasks: [] };
-    fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
-    console.log('✅ ants.config.json created successfully.');
-  });
-
-module.exports = { initCommand };
+  };
+  
+  fs.writeFileSync('ants.config.json', JSON.stringify(config, null, 2));
+  console.log('✅ Created ants.config.json');
+  console.log('\n📋 Next steps:');
+  console.log('  1. Edit ants.config.json to customize');
+  console.log('  2. Run `npx @aa-ok99/ants` to start');
+  console.log('\n🎉 Project initialized successfully!');
+  
+} catch (error) {
+  console.error('❌ Error:', error.message);
+  process.exit(1);
+}
