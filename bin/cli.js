@@ -42,14 +42,17 @@ const commandMap = {
   logs: 'monitor/logs',
   metrics: 'monitor/metrics',
   alerts: 'monitor/alerts',
+  analytics: 'monitor/analytics',
   routes: 'config/routes',
   redirects: 'config/redirects',
   flags: 'config/flags',
   target: 'config/target',
+  validate: 'config/validate',
   plugin: 'plugin/plugin',
   telemetry: 'system/telemetry',
   update: 'system/update',
   help: 'system/help',
+  completion: 'system/completion',
 };
 
 function showHelp() {
@@ -92,9 +95,11 @@ MONITORING:
   ants logs [url]         View deployment logs
   ants metrics [name]     Query observability metrics
   ants alerts             View recent alerts
+  ants analytics          View usage analytics
 
 CONFIG:
   ants config             Show or manage configuration
+  ants validate           Validate ants.config.json
   ants routes list        List routing rules
   ants routes add         Add routing rule
   ants redirects list     List redirects
@@ -116,9 +121,11 @@ SYSTEM:
   ants telemetry          Manage telemetry settings
   ants update             Check for CLI updates
   ants help [command]     Show help for a command
+  ants completion [shell] Generate shell completion (bash/zsh)
   ants --version          Show version
   ants --verbose          Enable verbose logging
   ants --debug            Enable debug logging
+  ants --json             Output as JSON (for automation)
 
 EXAMPLES:
   $ ants init
