@@ -1,45 +1,87 @@
-#!/usr/bin/env node
-
-console.log('🚀 Initializing new Ants project...');
-
 const fs = require('fs');
 const path = require('path');
+const prompts = require('prompts');
+const configUtil = require('../utils/config');
+const logger = require('../utils/logger');
 
-try {
+async function run() {
+  console.log('🚀 Initializing new Ants project...\n');
+  
   const projectDir = process.cwd();
+  const existing = configUtil.findConfig(projectDir);
   
-  // ตรวจสอบว่า有没有 ants.config.json แล้ว
-  const configPath = path.join(projectDir, 'ants.config.json');
-  
-  if (fs.existsSync(configPath)) {
+  if (existing) {
     console.log('⚠️  ants.config.json already exists!');
     console.log('💡 Run `rm ants.config.json` first if you want to reinitialize');
     process.exit(0);
   }
   
-  // สร้าง config
-  const config = {
-    name: path.basename(projectDir),
-    version: '1.0.0',
-    created: new Date().toISOString(),
-    ants: {
-      api: 'https://ants-pied.vercel.app',
-      status: 'ready'
+  const response = await prompts([
+    {
+      type: 'text',
+      name: 'name',
+      message: 'Project name',
+      initial: path.basename(projectDir),
     },
-    scripts: {
-      start: 'npx @aa-ok99/ants',
-      test: 'echo "No tests specified"'
-    }
-  };
+    {
+      type: 'text',
+      name: 'version',
+      message: 'Version',
+      initial: '1.0.0',
+    },
+    {
+      type: 'text',
+      name: 'description',
+      message: 'Description (optional)',
+      initial: '',
+    },
+    {
+      type: 'multiselect',
+      name: 'scripts',
+      message: 'Add starter scripts? (space to select)',
+      choices: [
+        { title: 'start', value: 'start', selected: true },
+        { title: 'test', value: 'test', selected: true },
+        { title: 'build', value: 'build', selected: false },
+        { title: 'deploy', value: 'deploy', selected: false },
+      ],
+    },
+  ]);
   
-  fs.writeFileSync('ants.config.json', JSON.stringify(config, null, 2));
-  console.log('✅ Created ants.config.json');
-  console.log('\n📋 Next steps:');
-  console.log('  1. Edit ants.config.json to customize');
-  console.log('  2. Run `npx @aa-ok99/ants` to start');
-  console.log('\n🎉 Project initialized successfully!');
+  if (!response.name) {
+    console.log('❌ Project name is required');
+    process.exit(1);
+  }
   
-} catch (error) {
-  console.error('❌ Error:', error.message);
-  process.exit(1);
+  const scripts = {};
+  if (response.scripts.includes('start')) scripts.start = 'npx @aa-ok99/ants';
+  if (response.scripts.includes('test')) scripts.test = 'echo "No tests specified"';
+  if (response.scripts.includes('build')) scripts.build = 'echo "Build not configured"';
+  if (response.scripts.includes('deploy')) scripts.deploy = 'echo "Deploy not configured"';
+  
+  const extra = {};
+  if (response.description) {
+    extra.description = response.description;
+  }
+  
+  try {
+    const result = configUtil.create(projectDir, {
+      name: response.name,
+      version: response.version,
+      extra: { scripts, ...extra }
+    });
+    
+    logger.info(`Created ${configUtil.CONFIG_FILE}`);
+    console.log(`\n✅ Created ${configUtil.CONFIG_FILE}`);
+    console.log('\n📋 Next steps:');
+    console.log('  1. Edit ants.config.json to customize');
+    console.log('  2. Run `ants` to start');
+    console.log('  3. Run `ants --help` for commands');
+    console.log('\n🎉 Project initialized successfully!');
+  } catch (err) {
+    console.error('❌ Error:', err.message);
+    process.exit(1);
+  }
 }
+
+run();

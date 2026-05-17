@@ -1,7 +1,7 @@
 {
   "name": "@aa-ok99/ants",
-  "version": "1.0.5",
-  "description": "🐜 Ants CLI - Lightweight automation tool",
+  "version": "2.0.0",
+  "description": "🐜 Ants CLI - Full-Stack Automation Platform",
   "main": "src/index.js",
   "bin": {
     "ants": "./bin/cli.js"
@@ -15,7 +15,7 @@
   "scripts": {
     "start": "node bin/cli.js",
     "dev": "node --watch bin/cli.js",
-    "test": "echo \"✅ Tests passed\" && exit 0",
+    "test": "jest --verbose",
     "prepublishOnly": "npm test",
     "version": "git add -A",
     "postversion": "git push && git push --tags"
@@ -30,7 +30,8 @@
     "cli",
     "automation",
     "ants",
-    "aa-ok99"
+    "aa-ok99",
+    "plugin"
   ],
   "license": "MIT",
   "repository": {
@@ -38,6 +39,9 @@
     "url": "git+https://github.com/aa-ok99/ants.git"
   },
   "dependencies": {
-    "commander": "^14.0.3"
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }

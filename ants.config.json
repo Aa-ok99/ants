@@ -1,13 +1,21 @@
 {
-  "name": "ants",
-  "version": "1.0.0",
+  "name": "test-project",
+  "version": "2.0.0",
   "created": "2026-04-13T14:25:49.018Z",
+  "description": "Full-stack CLI automation platform",
   "ants": {
     "api": "https://ants-pied.vercel.app",
     "status": "ready"
   },
   "scripts": {
     "start": "npx @aa-ok99/ants",
-    "test": "echo \"No tests specified\""
-  }
+    "test": "echo \"No tests specified\"",
+    "build": "echo \"Build not configured\"",
+    "deploy": "echo \"Deploy not configured\""
+  },
+  "env": {},
+  "routes": [],
+  "redirects": [],
+  "flags": {},
+  "targets": []
 }

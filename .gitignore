@@ -1,5 +1,12 @@
 node_modules/
 .vercel/
 .env
+.env.*
+!.env.example
 .DS_Store
 *.log
+ants.log
+coverage/
+dist/
+build/
+.ants
