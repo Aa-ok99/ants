@@ -15,7 +15,7 @@
   "scripts": {
     "start": "node bin/cli.js",
     "dev": "node --watch bin/cli.js",
-    "test": "jest --verbose",
+    "test": "node node_modules/jest/bin/jest.js --verbose",
     "prepublishOnly": "npm test",
     "version": "git add -A",
     "postversion": "git push && git push --tags"

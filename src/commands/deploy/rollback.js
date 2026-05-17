@@ -2,10 +2,10 @@ const api = require('../../api');
 const auth = require('../../auth');
 const logger = require('../../utils/logger');
 
-const url = process.argv[2];
+const url = process.argv[3] || process.argv[2];
 
 async function run() {
-  if (!url) {
+  if (!url || url === 'rollback') {
     console.log('⏪ Rollback to a previous deployment\n');
     console.log('USAGE:');
     console.log('  ants rollback [deployment-url]');

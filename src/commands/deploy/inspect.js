@@ -2,10 +2,10 @@ const api = require('../../api');
 const auth = require('../../auth');
 const logger = require('../../utils/logger');
 
-const url = process.argv[2];
+const url = process.argv[3] || process.argv[2];
 
 async function run() {
-  if (!url) {
+  if (!url || url === 'inspect') {
     console.log('🔍 Inspect a deployment\n');
     console.log('USAGE:');
     console.log('  ants inspect [deployment-url]');
